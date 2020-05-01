@@ -1,5 +1,4 @@
 class Constants(object):
-
     # constants that used in javascript and python
     MINIMAL_ZOOM = 17
 
@@ -24,8 +23,8 @@ class Constants(object):
 
     ALL_AGE_GROUPS_LIST = list(range(1, AGE_GROUPS_NUMBER + 1)) + [99]
 
-
     # other global constants (python only)
+    DEFAULT_NUMBER_OF_YEARS_AGO = 5
 
     def __setattr__(self, *_):
         """
@@ -34,7 +33,7 @@ class Constants(object):
         pass
 
     def to_dict(self):
-        return {a: getattr(self, a) for a in dir(self) if not a.startswith('__') and not callable(getattr(self,a))}
+        return {a: getattr(self, a) for a in dir(self) if not a.startswith('__') and not callable(getattr(self, a))}
+
 
 CONST = Constants()
-

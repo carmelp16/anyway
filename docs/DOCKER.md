@@ -13,29 +13,30 @@ The container loads itself with the command given in the instructions, it has th
 With every local code change, the container would restart itself and the changes would be immediately available in your web browser.
 The current image is based on an Ubuntu linux with java.
 
-Read more on the docker [Github project] (https://github.com/docker/docker)
+Read more on the docker [Github project](https://github.com/docker/docker)
 
 
 Instructions
 -----------------------
-* Please complete ANYWAY’s [“getting the code” section] (https://github.com/hasadna/anyway#getting-the-code-and-adding-ci-to-your-forked-repository) before starting
+* Please complete ANYWAY’s [“getting the code” section](https://github.com/hasadna/anyway#getting-the-code) before starting
 
-**1.** [Get the code] (https://github.com/hasadna/anyway#getting-the-code-and-adding-ci-to-your-forked-repository)
+**1.** [Get the code](https://github.com/hasadna/anyway#getting-the-code)
 
-**2.** [Install Docker] (https://docs.docker.com/install/)
+**2.** [Install Docker](https://docs.docker.com/install/)
 
-**3.** Open "Docker terminal", go to the **anyway** directory and run:
-    `docker-compose up -d db`
-    
-**4.** Download the [zipped db dump] (https://drive.google.com/drive/folders/1OesX8Y2MGgIcj0B3f5cdS-BIzt4govXA?usp=sharing) (You need to request access) and save it in the **anyway** directory.
+**3.** Build anyway container: `docker-compose build`
 
-**5.** unzip the truncated_dump
+**4.** Start the container, go to the **anyway** directory and run:
+    `docker-compose up -d`
 
-**6.** Restore the db (in anyway directory): `cat truncated_dump | docker-compose exec -T db psql -U anyway`
+**5.** Download the [db dump](https://drive.google.com/drive/folders/1OesX8Y2MGgIcj0B3f5cdS-BIzt4govXA?usp=sharing) (You need to request access) and save it in the **anyway** directory.
+Restore the db (in anyway directory): `cat <truncated dump file path> | docker-compose exec -T db psql -U anyway`
+Now your containers are up and with data loaded.
 
-**7.** start anyway container: `docker-compose up -d`
+**6.** **You're all set!** ANYWAY is up and running - connect to http://127.0.0.1:8080
+Note - you won't see the map since the key works in production.
 
-**8.** **You're all set!** ANYWAY is up and running - connect to http://127.0.0.1:8080
+**7.**. To stop the containers run: `docker-compose down`
 
 More
 -----------------------

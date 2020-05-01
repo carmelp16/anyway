@@ -1,3 +1,6 @@
+python-geohash
+geographiclib
+numpy
 geoalchemy2
 Flask
 Flask-Assets
@@ -15,7 +18,7 @@ psycopg2
 yuicompressor
 Flask-Admin
 Flask-Security
-WTForms
+WTForms==2.2.1
 sendgrid
 python-dateutil
 alembic
@@ -26,7 +29,6 @@ requests
 setuptools
 click
 six
-celery[redis]
 openpyxl
 enum34
 feedparser
@@ -44,3 +46,8 @@ fuzzywuzzy
 xlrd
 flask_cors
 pandas
+tweepy
+beautifulsoup4==4.6.0
+google-cloud-storage
+google-cloud-core
+google-api-core

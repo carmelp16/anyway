@@ -1,5 +1,4 @@
 class Views(object):
-
     MARKERS_HEBREW_VIEW = """SELECT markers.id,
                                     markers.provider_and_id,
                                     markers.provider_code,
@@ -57,6 +56,12 @@ class Views(object):
                                     markers.km,
                                     markers.km_raw,
                                     markers.km_accurate,
+                                    road_segments.segment_id as road_segment_id,
+                                    road_segments.segment as road_segment_number,
+                                    road_segments.from_name || ' - ' || road_segments.to_name as road_segment_name,
+                                    road_segments.from_km as road_segment_from_km,
+                                    road_segments.to_km as road_segment_to_km,
+                                    road_segments.to_km - road_segments.from_km as road_segment_length_km,
                                     markers.yishuv_symbol,
                                     markers.yishuv_name,
                                     markers.geo_area,
@@ -99,6 +104,7 @@ class Views(object):
                                     markers.x,
                                     markers.y
                                    FROM markers
+                                     LEFT JOIN road_segments on (markers.road1 = road_segments.road) and (markers.km / 10 between road_segments.from_km and road_segments.to_km)
                                      LEFT JOIN accident_type ON markers.accident_type = accident_type.id AND markers.accident_year = accident_type.year AND markers.provider_code = accident_type.provider_code
                                      LEFT JOIN accident_severity ON markers.accident_severity = accident_severity.id AND markers.accident_year = accident_severity.year AND markers.provider_code = accident_severity.provider_code
                                      LEFT JOIN location_accuracy ON markers.location_accuracy = location_accuracy.id AND markers.accident_year = location_accuracy.year AND markers.provider_code = location_accuracy.provider_code
@@ -205,7 +211,6 @@ class Views(object):
      LEFT JOIN safety_measures_use ON involved.safety_measures_use = safety_measures_use.id AND involved.accident_year = safety_measures_use.year AND involved.provider_code = safety_measures_use.provider_code
      LEFT JOIN late_deceased ON involved.late_deceased = late_deceased.id AND involved.accident_year = late_deceased.year AND involved.provider_code = late_deceased.provider_code;"""
 
-
     VEHICLES_HEBREW_VIEW = """ SELECT
     vehicles.id,
     vehicles.accident_id,
@@ -290,6 +295,7 @@ class Views(object):
     involved_hebrew.involve_id,
     involved_hebrew.accident_year,
     involved_hebrew.accident_month,
+    markers_hebrew.provider_code_hebrew,
     markers_hebrew.accident_timestamp,
     markers_hebrew.accident_type,
     markers_hebrew.accident_type_hebrew,
@@ -342,6 +348,12 @@ class Views(object):
     markers_hebrew.km,
     markers_hebrew.km_raw,
     markers_hebrew.km_accurate,
+    markers_hebrew.road_segment_id,
+    markers_hebrew.road_segment_number,
+    markers_hebrew.road_segment_name,
+    markers_hebrew.road_segment_from_km,
+    markers_hebrew.road_segment_to_km,
+    markers_hebrew.road_segment_length_km,
     markers_hebrew.yishuv_symbol as accident_yishuv_symbol,
     markers_hebrew.yishuv_name as accident_yishuv_name,
     markers_hebrew.geo_area,
@@ -457,6 +469,12 @@ class Views(object):
     markers_hebrew.km,
     markers_hebrew.km_raw,
     markers_hebrew.km_accurate,
+    markers_hebrew.road_segment_id,
+    markers_hebrew.road_segment_number,
+    markers_hebrew.road_segment_name,
+    markers_hebrew.road_segment_from_km,
+    markers_hebrew.road_segment_to_km,
+    markers_hebrew.road_segment_length_km,
     markers_hebrew.yishuv_symbol as accident_yishuv_symbol,
     markers_hebrew.yishuv_name as accident_yishuv_name,
     markers_hebrew.geo_area,
@@ -522,5 +540,6 @@ class Views(object):
     INNER JOIN markers_hebrew ON vehicles_hebrew.provider_code = markers_hebrew.provider_code
                              AND vehicles_hebrew.accident_id = markers_hebrew.id
                              AND vehicles_hebrew.accident_year = markers_hebrew.accident_year ;"""
+
 
 VIEWS = Views()
